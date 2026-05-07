@@ -7,7 +7,7 @@ console.log('--- Script starting ---');
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
-const port = 3000;
+const port = 3002;
 
 // --- Cluster Master Process ---
 if (cluster.isPrimary) {
