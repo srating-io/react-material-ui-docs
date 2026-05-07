@@ -1,0 +1,61 @@
+'use client';
+
+import { Button, CodeBlock, Toast, Typography } from '@esmalley/react-material-ui';
+import { toaster } from '@esmalley/ts-utils';
+
+export default function Page() {
+  const showInfo = () => {
+    toaster.add('This is an info toast!', 'info');
+  };
+
+  const showSuccess = () => {
+    toaster.add('Operation successful!', 'success');
+  };
+
+  const showError = () => {
+    toaster.add('An error occurred!', 'error');
+  };
+
+
+  return (
+    <div>
+      <Typography type='h5' style={{ marginBottom: 20 }}>Toast</Typography>
+
+      <Typography type='body1' style={{ marginBottom: 10 }}>Toasts are informational popups that will fade after a few seconds. They can contain import warning, error, success, or general info messages.</Typography>
+      <Typography type='h6' style={{ marginBottom: 10 }}>Trigger Toasts</Typography>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <Button title='Info' value={1} onClick={showInfo} />
+        <Button title='Success' value={2} onClick={showSuccess} />
+        <Button title='Error' value={3} onClick={showError} />
+      </div>
+
+      <Toast />
+
+      <CodeBlock code = {`
+        import { Button, Toast } from '@esmalley/react-material-ui';
+        import { toaster } from '@esmalley/ts-utils';
+
+        const showInfo = () => {
+          toaster.add('This is an info toast!', 'info');
+        };
+
+        const showSuccess = () => {
+          toaster.add('Operation successful!', 'success');
+        };
+
+        const showError = () => {
+          toaster.add('An error occurred!', 'error');
+        };
+
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+          <Button title='Info' value={1} onClick={showInfo} />
+          <Button title='Success' value={2} onClick={showSuccess} />
+          <Button title='Error' value={3} onClick={showError} />
+        </div>
+
+        <Toast />
+      `} />
+      <Typography type='body1' style={{ marginBottom: 10 }}>The toast needs to be put in the main body of you application, the toaster will talk with the toast from anywhere in the app.</Typography>
+    </div>
+  );
+}

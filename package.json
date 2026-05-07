@@ -1,0 +1,42 @@
+{
+  "name": "ux.srating.io",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@esmalley/react-material-icons": "^4.0.2",
+    "@esmalley/react-material-ui": "^1.0.3",
+    "@esmalley/ts-utils": "^6.2.6",
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typeface-roboto": "^1.1.13"
+  },
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "25.6.1",
+    "@types/react": "19.2.14",
+    "typescript": "6.0.3"
+  }
+}
