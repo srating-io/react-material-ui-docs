@@ -1,19 +1,18 @@
 'use client';
 
-import { Button, CodeBlock, Toast, Typography } from '@esmalley/react-material-ui';
-import { toaster } from '@esmalley/ts-utils';
+import { Button, CodeBlock, getToaster, Toast, Typography } from '@esmalley/react-material-ui';
 
 export default function Page() {
   const showInfo = () => {
-    toaster.add('This is an info toast!', 'info');
+    getToaster().add('This is an info toast!', 'info');
   };
 
   const showSuccess = () => {
-    toaster.add('Operation successful!', 'success');
+    getToaster().add('Operation successful!', 'success');
   };
 
   const showError = () => {
-    toaster.add('An error occurred!', 'error');
+    getToaster().add('An error occurred!', 'error');
   };
 
 
@@ -32,19 +31,18 @@ export default function Page() {
       <Toast />
 
       <CodeBlock code = {`
-        import { Button, Toast } from '@esmalley/react-material-ui';
-        import { toaster } from '@esmalley/ts-utils';
+        import { Button, Toast, getToaster } from '@esmalley/react-material-ui';
 
         const showInfo = () => {
-          toaster.add('This is an info toast!', 'info');
+          getToaster().add('This is an info toast!', 'info');
         };
 
         const showSuccess = () => {
-          toaster.add('Operation successful!', 'success');
+          getToaster().add('Operation successful!', 'success');
         };
 
         const showError = () => {
-          toaster.add('An error occurred!', 'error');
+          getToaster().add('An error occurred!', 'error');
         };
 
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>

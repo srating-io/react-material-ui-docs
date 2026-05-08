@@ -25,7 +25,11 @@ export default function Page() {
         <Typography type="body2" style={{ marginTop: 10 }}>
           Install the core utilities and icon packages via your preferred package manager:
         </Typography>
-        <CodeBlock code={'npm install @esmalley/react-material-ui @esmalley/react-material-icons @esmalley/ts-utils'} />
+        <CodeBlock code={`
+          npm install @esmalley/react-material-ui
+          npm install @esmalley/react-material-icons
+          npm install @esmalley/ts-utils
+        `} />
       </section>
 
       <section style={{ marginTop: 40 }}>

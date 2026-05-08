@@ -2,13 +2,12 @@
 
 import InfoIcon from '@esmalley/react-material-icons/Info';
 import MouseIcon from '@esmalley/react-material-icons/Mouse';
-import { Button, CodeBlock, Divider, Tile, Typography } from '@esmalley/react-material-ui';
-import { toaster } from '@esmalley/ts-utils';
+import { Button, CodeBlock, Divider, getToaster, Tile, Typography } from '@esmalley/react-material-ui';
 
 
 export default function Page() {
   const buttons = [
-    <Button title='A button' value={1} onClick={() => toaster.add('You clicked a button', 'success')} />,
+    <Button title='A button' value={1} onClick={() => getToaster().add('You clicked a button', 'success')} />,
   ];
 
   return (
@@ -59,8 +58,12 @@ export default function Page() {
       <Typography type='h6' style={{ marginBottom: 10 }}>Buttons</Typography>
       <Tile primary='Primary line' secondary='Secondary ' icon={<InfoIcon style={{ fontSize: 20 }} />} buttons={buttons} />
       <CodeBlock code={`
-        import { Tile } from '@esmalley/react-material-ui';
+        import { Tile, Button, getToaster } from '@esmalley/react-material-ui';
         import InfoIcon from '@esmalley/react-material-icons/Info';
+
+        const buttons = [
+          <Button title='A button' value={1} onClick={() => getToaster().add('You clicked a button', 'success')} />,
+        ];
 
         <Tile
           primary='Primary line'
@@ -72,17 +75,16 @@ export default function Page() {
       <Divider />
 
       <Typography type='h6' style={{ marginBottom: 10 }}>Clickable</Typography>
-      <Tile primary='Click me' secondary='Secondary line' icon={<MouseIcon style={{ fontSize: 20 }} />} onClick={() => toaster.add('Tile was clicked', 'success')} />
+      <Tile primary='Click me' secondary='Secondary line' icon={<MouseIcon style={{ fontSize: 20 }} />} onClick={() => getToaster().add('Tile was clicked', 'success')} />
       <CodeBlock code={`
-        import { Tile } from '@esmalley/react-material-ui';
+        import { Tile, getToaster } from '@esmalley/react-material-ui';
         import MouseIcon from '@esmalley/react-material-icons/Mouse';
-        import { toaster } from '@esmalley/ts-utils';
 
         <Tile
           primary='Click me'
           secondary='Secondary line'
           icon={<MouseIcon style={{ fontSize: 20 }} />}
-          onClick={() => toaster.add('Tile was clicked', 'success')}
+          onClick={() => getToaster().add('Tile was clicked', 'success')}
           />
         `} />
       <Divider />

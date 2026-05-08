@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import ListIcon from '@esmalley/react-material-icons/List';
 import InfoIcon from '@esmalley/react-material-icons/Info';
 import CheckCircleIcon from '@esmalley/react-material-icons/CheckCircle';
-import { toaster } from '@esmalley/ts-utils';
-import { Button, CodeBlock, Divider, Menu, MenuOption, Tile, Typography, useTheme } from '@esmalley/react-material-ui';
+import { Button, CodeBlock, Divider, getToaster, Menu, MenuOption, Tile, Typography, useTheme } from '@esmalley/react-material-ui';
 
 const getOptions = () => {
   return [
@@ -15,7 +14,7 @@ const getOptions = () => {
       secondaryLabel: 'Description for option 1',
       icon: <ListIcon />,
       selectable: true,
-      onSelect: (opt: MenuOption) => toaster.add(`Selected: ${opt.label}`, 'success'),
+      onSelect: (opt: MenuOption) => getToaster().add(`Selected: ${opt.label}`, 'success'),
     },
     {
       value: 'option2',
@@ -23,7 +22,7 @@ const getOptions = () => {
       secondaryLabel: 'Description for option 2',
       icon: <InfoIcon />,
       selectable: true,
-      onSelect: (opt: MenuOption) => toaster.add(`Selected: ${opt.label}`, 'success'),
+      onSelect: (opt: MenuOption) => getToaster().add(`Selected: ${opt.label}`, 'success'),
     },
     {
       group: 'Actions',
@@ -31,7 +30,7 @@ const getOptions = () => {
       label: 'Action 1',
       icon: <CheckCircleIcon />,
       selectable: true,
-      onSelect: (opt: MenuOption) => toaster.add(`Selected: ${opt.label}`, 'success'),
+      onSelect: (opt: MenuOption) => getToaster().add(`Selected: ${opt.label}`, 'success'),
     },
     {
       value: 'disabled-option',
@@ -118,7 +117,7 @@ export default function Page() {
         <BasicMenu />
 
         <CodeBlock code = {`
-          import { Button, Menu, MenuOption } from '@esmalley/react-material-ui';
+          import { Button, Menu, MenuOption, getToaster } from '@esmalley/react-material-ui';
 
           const getOptions = () => {
             return [
@@ -128,7 +127,7 @@ export default function Page() {
                 secondaryLabel: 'Description for option 1',
                 icon: <ListIcon />,
                 selectable: true,
-                onSelect: (opt: MenuOption) => toaster.add(\`Selected: \${opt.label}\`, 'success'),
+                onSelect: (opt: MenuOption) => getToaster().add(\`Selected: \${opt.label}\`, 'success'),
               },
               {
                 value: 'option2',
@@ -136,7 +135,7 @@ export default function Page() {
                 secondaryLabel: 'Description for option 2',
                 icon: <InfoIcon />,
                 selectable: true,
-                onSelect: (opt: MenuOption) => toaster.add(\`Selected: \${opt.label}\`, 'success'),
+                onSelect: (opt: MenuOption) => getToaster().add(\`Selected: \${opt.label}\`, 'success'),
               },
               {
                 group: 'Actions',
@@ -144,7 +143,7 @@ export default function Page() {
                 label: 'Action 1',
                 icon: <CheckCircleIcon />,
                 selectable: true,
-                onSelect: (opt: MenuOption) => toaster.add(\`Selected: \${opt.label}\`, 'success'),
+                onSelect: (opt: MenuOption) => getToaster().add(\`Selected: \${opt.label}\`, 'success'),
               },
               {
                 value: 'disabled-option',

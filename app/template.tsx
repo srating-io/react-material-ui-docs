@@ -8,7 +8,7 @@ import Header from 'components/Header';
 import { Style } from '@esmalley/ts-utils';
 
 import Sidebar from 'components/Sidebar';
-import { ThemeProvider, Themes, useWindowDimensions, UXBaseline } from '@esmalley/react-material-ui';
+import { ThemeProvider, Themes, Toast, useWindowDimensions, UXBaseline } from '@esmalley/react-material-ui';
 
 
 const localStorageKey = 'theme';
@@ -69,6 +69,7 @@ const Template = ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
           </div>
+          <Toast />
         </>
         : ''
       }

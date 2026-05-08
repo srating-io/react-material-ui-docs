@@ -5,8 +5,8 @@
   "type": "module",
   "dependencies": {
     "@esmalley/react-material-icons": "^4.0.2",
-    "@esmalley/react-material-ui": "^1.0.5",
-    "@esmalley/ts-utils": "^6.2.6",
+    "@esmalley/react-material-ui": "^1.0.7",
+    "@esmalley/ts-utils": "^6.2.7",
     "next": "^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
