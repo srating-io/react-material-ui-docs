@@ -19,9 +19,7 @@ const SidebarContents = () => {
 
   // Scroll active item into view when path changes or on mount
   useEffect(() => {
-    console.log('hello', activeLinkRef)
     if (activeLinkRef.current) {
-      console.log('ok', activeLinkRef.current)
       activeLinkRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest', // Scrolls only if it's hidden out of view
