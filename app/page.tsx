@@ -61,25 +61,25 @@ export default function Page() {
           <Tile
             primary="Inputs"
             secondary="Text, Select, Pickers"
-            icon = {<TextFieldsIcon style = {{ color: theme.info.main }} />}
+            icon = {<TextFieldsIcon style = {{ color: theme.info.main, fontSize: 24 }} />}
             onClick={() => {
-              window.location.href = '/ux/inputs';
+              window.location.href = '/inputs';
             }}
           />
           <Tile
             primary="Feedback"
             secondary="Progress, Skeletons"
-            icon = {<DownloadingIcon style = {{ color: theme.info.main }} />}
+            icon = {<DownloadingIcon style = {{ color: theme.info.main, fontSize: 24 }} />}
             onClick={() => {
-              window.location.href = '/ux/loading';
+              window.location.href = '/loading';
             }}
           />
           <Tile
             primary="Icons"
             secondary="Material Design Icons"
-            icon = {<PhotoIcon style = {{ color: theme.info.main }} />}
+            icon = {<PhotoIcon style = {{ color: theme.info.main, fontSize: 24 }} />}
             onClick={() => {
-              window.location.href = '/ux/icons';
+              window.location.href = '/icons';
             }}
           />
         </Columns>
@@ -88,13 +88,14 @@ export default function Page() {
       <section style={{ marginTop: 60, padding: '20px', backgroundColor: theme.background.main, borderRadius: '8px' }}>
         <Typography type="h6">Usage Example</Typography>
         <CodeBlock code={`
-          import { Button, Typography } from '@esmalley/react-material-ui';
+          import { Button, Typography, Toast, getToaster } from '@esmalley/react-material-ui';
 
           const MyComponent = () => (
             <div>
               <Typography type="h1">Hello World</Typography>
-              <Button title="Click Me" onClick={() => alert('Clicked!')} />
+              <Button title="Click Me" onClick={() => getToaster().add('Clicked button', 'success')} />
             </div>
+            <Toast />
           );
         `} />
       </section>
