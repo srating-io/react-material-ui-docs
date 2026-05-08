@@ -28,8 +28,7 @@ export default function Page() {
         <Button title='Error' value={3} onClick={showError} />
       </div>
 
-      <Toast />
-
+      
       <CodeBlock code = {`
         import { Button, Toast, getToaster } from '@esmalley/react-material-ui';
 

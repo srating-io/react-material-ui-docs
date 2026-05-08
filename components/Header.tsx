@@ -102,11 +102,14 @@ const Header = () => {
             </Tooltip>
             |
             <Tooltip text='Github'>
-              <IconButton
-                style = {iconStyle}
-                value = {'git'} icon = {<GitHubIcon />}
-                onClick={() => window.open('https://github.com/srating-io/react-material-ui', '_blank')}
-              />
+              <div style = {{ display: 'flex', alignItems: 'center', marginLeft: 5, cursor: 'pointer' }} onClick={() => window.open('https://github.com/srating-io/react-material-ui', '_blank')}>
+                <Typography type = 'caption' style = {{ color: iconStyle.color }}>{process.env.VERSION}</Typography>
+                <IconButton
+                  style = {iconStyle}
+                  value = {'git'} icon = {<GitHubIcon />}
+                  onClick={() => window.open('https://github.com/srating-io/react-material-ui', '_blank')}
+                />
+              </div>
             </Tooltip>
           </div>
         </div>

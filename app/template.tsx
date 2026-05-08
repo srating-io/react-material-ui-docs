@@ -9,6 +9,7 @@ import { Style } from '@esmalley/ts-utils';
 
 import Sidebar from 'components/Sidebar';
 import { ThemeProvider, Themes, Toast, useWindowDimensions, UXBaseline } from '@esmalley/react-material-ui';
+import dynamic from 'next/dynamic';
 
 
 const localStorageKey = 'theme';
@@ -27,17 +28,9 @@ export const set_theme_mode = (mode: Themes) => {
   setTheme_?.(mode);
 };
 
-
-const Template = ({ children }: { children: React.ReactNode }) => {
-  const { width } = useWindowDimensions();
+const Base = ({ children }: { children: React.ReactNode }) => {
 
   const [themeMode, setTheme] = useState<Themes>(getInitialMode);
-
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   // Register/unregister the setter on mount/unmount
   useEffect(() => {
@@ -46,35 +39,40 @@ const Template = ({ children }: { children: React.ReactNode }) => {
   }, [setTheme]);
 
 
-  let paddingTop = '64px';
-
-  if (width < 600) {
-    paddingTop = '56px';
-  }
 
   return (
     <ThemeProvider theme={themeMode}>
       <UXBaseline />
-      {
-        isMounted ?
-        <>
-          <Header />
-          <div
-            className={Style.getStyleClassName({ paddingTop, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxSizing: 'border-box' })}
-          >
-            <div className={Style.getStyleClassName({ display: 'flex', flex: 1, overflow: 'hidden' })}>
-              <Sidebar />
-              <div className={Style.getStyleClassName({ width: '100%', flexShrink: 1, overflowY: 'auto', padding: '10px 10px 56px 10px' })}>
-                {children}
-              </div>
-            </div>
+      <Header />
+      <div
+        className={Style.getStyleClassName({ 
+          paddingTop: '64px', // Desktop fallback
+          height: '100vh', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          overflow: 'hidden', 
+          boxSizing: 'border-box',
+          // Mobile overrides handled instantly by browser CSS
+          '@media (max-width: 599px)': {
+            paddingTop: '56px'
+          }
+        })}
+      >
+        <div className={Style.getStyleClassName({ display: 'flex', flex: 1, overflow: 'hidden' })}>
+          <Sidebar key="sidebar" />
+          <div className={Style.getStyleClassName({ width: '100%', flexShrink: 1, overflowY: 'auto', padding: '10px 10px 56px 10px' })}>
+            {children}
           </div>
-          <Toast />
-        </>
-        : ''
-      }
+        </div>
+      </div>
+      <Toast />
     </ThemeProvider>
   );
 };
+
+const Template = dynamic(() => Promise.resolve(Base), {
+  ssr: false,
+  loading: () => <div style={{ height: '100vh', backgroundColor: '#121212' }} />
+});
 
 export default Template;

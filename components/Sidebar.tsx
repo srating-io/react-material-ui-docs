@@ -7,14 +7,27 @@ import { Objector, Style } from '@esmalley/ts-utils';
 import KeyboardArrowUpIcon from '@esmalley/react-material-icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@esmalley/react-material-icons/KeyboardArrowDown';
 import WebIcon from '@esmalley/react-material-icons/Web';
-import { useState } from 'react';
-import { Dimensions, Drawer, IconButton, Typography, useTheme, useWindowDimensions } from '@esmalley/react-material-ui';
+import { useEffect, useRef, useState } from 'react';
+import { Drawer, IconButton, Typography, useTheme } from '@esmalley/react-material-ui';
 
-const getSideBarContents = () => {
+const SidebarContents = () => {
   const pathname = usePathname();
   const theme = useTheme();
+  const activeLinkRef = useRef<HTMLAnchorElement | null>(null);
 
   const [expanded, setExpanded] = useState(new Set(['inputs', 'containers', 'layouts', 'text', 'buttons', 'overlay', 'tables']));
+
+  // Scroll active item into view when path changes or on mount
+  useEffect(() => {
+    console.log('hello', activeLinkRef)
+    if (activeLinkRef.current) {
+      console.log('ok', activeLinkRef.current)
+      activeLinkRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest', // Scrolls only if it's hidden out of view
+      });
+    }
+  }, [pathname, activeLinkRef.current]);
 
   const sections = [
     {
@@ -135,45 +148,63 @@ const getSideBarContents = () => {
     }}>
       <Typography type='h6' style={{ marginBottom: '16px', paddingLeft: 20, color: theme.text.secondary }}>Component list</Typography>
 
-      <Typography type='a' href="/" style={getSidebarItemStyle('/')}>
+      <Typography
+        type='a'
+        href="/" style={getSidebarItemStyle('/')}
+        ref={pathname === '/' ? activeLinkRef : undefined}
+      >
         Getting started
       </Typography>
 
-      {sections.map((row) => {
+      {sections.map((row, index) => {
         const section = row.value;
         const row_children = row.children;
 
         if (!row_children || !row_children.length) {
+          const path = `/${section}`;
           return (
-            <Typography type='a' href={`/${section}`} style={getSidebarItemStyle(`/${section}`)}>{row.name}</Typography>
+            <Typography
+              ref={pathname === path ? activeLinkRef : undefined}
+              key = {index}
+              type='a'
+              href={`/${section}`}
+              style={getSidebarItemStyle(`/${section}`)}>{row.name}
+            </Typography>
           );
         }
         return (
-          <>
-          <div
-            style = {{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer', paddingLeft: 20 }}
-            onClick={() => {
-              if (expanded.has(section)) {
-                expanded.delete(section);
-              } else {
-                expanded.add(section);
-              }
-              setExpanded(Objector.deepClone(expanded));
-            }}
-          >
-            <Typography type = 'body1'>{row.name}</Typography>
-            {expanded.has(section) ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          <div key = {index}>
+            <div
+              style = {{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer', paddingLeft: 20 }}
+              onClick={() => {
+                if (expanded.has(section)) {
+                  expanded.delete(section);
+                } else {
+                  expanded.add(section);
+                }
+                setExpanded(Objector.deepClone(expanded));
+              }}
+            >
+              <Typography type = 'body1'>{row.name}</Typography>
+              {expanded.has(section) ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </div>
+            <div>
+              {row_children.map((child) => {
+                const path = `/${section}/${child.value}`;
+                return (
+                  expanded.has(section) ?
+                  <Typography
+                    ref={pathname === path ? activeLinkRef : undefined}
+                    key = {child.value} type='a' href={`/${section}/${child.value}`}
+                    style={getSidebarItemStyle(`/${section}/${child.value}`)}
+                  >
+                    <span style = {{ paddingLeft: 10 }}></span>{child.name}
+                  </Typography>
+                    : ''
+                );
+              })}
+            </div>
           </div>
-          <div>
-            {row_children.map((child) => {
-              return (
-                expanded.has(section) ?
-                <Typography type='a' href={`/${section}/${child.value}`} style={getSidebarItemStyle(`/${section}/${child.value}`)}><span style = {{ paddingLeft: 10 }}></span>{child.name}</Typography>
-                  : ''
-              );
-            })}
-          </div>
-          </>
         );
       })}
     </div>
@@ -182,26 +213,61 @@ const getSideBarContents = () => {
 
 const Sidebar = () => {
   const theme = useTheme();
-  const { width } = useWindowDimensions() as Dimensions;
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Return a stable structural placeholder of the identical desktop width (250px)
+  // during SSR to prevent layout shifts.
+  if (!isMounted) {
+    return <div style={{ width: '250px', flexShrink: 0 }} />;
+  }
 
   return (
-    width <= 750 ?
     <>
-      <div style = {{ flexShrink: 0, width: 50, textAlign: 'center', paddingTop: 10 }}>
-        <IconButton onClick = {() => setDrawerOpen(!drawerOpen)} value = 'sidebar' icon = {<WebIcon style = {{ fontSize: 24, color: theme.text.secondary }} />} />
-      </div>
-      <Drawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+      {/* 1. MOBILE SIDEBAR: Only visible when viewport <= 750px */}
+      <div 
+        className={Style.getStyleClassName({
+          display: 'none', 
+          '@media (max-width: 750px)': {
+            display: 'block',
+            flexShrink: 0, 
+            width: '50px', 
+            textAlign: 'center', 
+            paddingTop: '10px'
+          }
+        })}
       >
-        {getSideBarContents()}
-      </Drawer>
+        <IconButton 
+          onClick={() => setDrawerOpen(!drawerOpen)} 
+          value='sidebar' 
+          icon={<WebIcon style={{ fontSize: 24, color: theme.text.secondary }} />} 
+        />
+        <Drawer
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+        >
+          <SidebarContents />
+        </Drawer>
+      </div>
+
+      {/* 2. DESKTOP SIDEBAR: Only visible when viewport > 750px */}
+      <div 
+        className={Style.getStyleClassName({
+          display: 'block',
+          flexShrink: 0, 
+          overflowY: 'auto',
+          '@media (max-width: 750px)': {
+            display: 'none'
+          }
+        })}
+      >
+        <SidebarContents />
+      </div>
     </>
-      :
-      <div className={Style.getStyleClassName({ flexShrink: 0, overflowY: 'auto' })}>
-      {getSideBarContents()}
-    </div>
   );
 };
 
