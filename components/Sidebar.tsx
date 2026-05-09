@@ -7,25 +7,64 @@ import { Objector, Style } from '@esmalley/ts-utils';
 import KeyboardArrowUpIcon from '@esmalley/react-material-icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@esmalley/react-material-icons/KeyboardArrowDown';
 import WebIcon from '@esmalley/react-material-icons/Web';
-import { useEffect, useRef, useState } from 'react';
-import { Drawer, IconButton, Typography, useTheme } from '@esmalley/react-material-ui';
 
-const SidebarContents = () => {
+import React, { useEffect, useRef, useState } from 'react';
+
+import {
+  Drawer,
+  IconButton,
+  Typography,
+  useTheme,
+} from '@esmalley/react-material-ui';
+
+const SidebarContents = ({
+  scrollContainerRef,
+}: {
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+}) => {
   const pathname = usePathname();
   const theme = useTheme();
+
   const activeLinkRef = useRef<HTMLAnchorElement | null>(null);
 
-  const [expanded, setExpanded] = useState(new Set(['inputs', 'containers', 'layouts', 'text', 'buttons', 'overlay', 'tables']));
+  const [expanded, setExpanded] = useState(
+    new Set([
+      'inputs',
+      'containers',
+      'layouts',
+      'text',
+      'buttons',
+      'overlay',
+      'tables',
+    ]),
+  );
 
-  // Scroll active item into view when path changes or on mount
+  // Manual scrolling instead of scrollIntoView()
+  // fixes iOS sticky/overflow bugs
   useEffect(() => {
-    if (activeLinkRef.current) {
-      activeLinkRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest', // Scrolls only if it's hidden out of view
+    const activeEl = activeLinkRef.current;
+    const container = scrollContainerRef.current;
+
+    if (!activeEl || !container) return;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const containerRect = container.getBoundingClientRect();
+        const activeRect = activeEl.getBoundingClientRect();
+
+        const targetTop =
+          activeRect.top -
+          containerRect.top +
+          container.scrollTop -
+          24;
+
+        container.scrollTo({
+          top: Math.max(targetTop, 0),
+          behavior: 'smooth',
+        });
       });
-    }
-  }, [pathname, activeLinkRef.current]);
+    });
+  }, [pathname, scrollContainerRef]);
 
   const sections = [
     {
@@ -117,7 +156,6 @@ const SidebarContents = () => {
     const style: Record<string, unknown> = {
       padding: '10px 0px',
       cursor: 'pointer',
-      // borderRadius: '4px',
       color: isActive ? theme.info.main : theme.text.primary,
       transition: 'background-color 0.2s',
       display: 'block',
@@ -132,23 +170,35 @@ const SidebarContents = () => {
       style.borderLeft = `1px solid ${style.color}`;
       style.backgroundColor = theme.action.hover;
     }
+
     return style;
   };
 
-
   return (
-    <div style={{
-      width: '250px',
-      display: 'flex',
-      flexDirection: 'column',
-      // gap: '8px',
-      backgroundColor: theme.background.main,
-    }}>
-      <Typography type='h6' style={{ marginBottom: '16px', paddingLeft: 20, color: theme.text.secondary }}>Component list</Typography>
+    <div
+      style={{
+        width: '250px',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: 8,
+        paddingBottom: 32,
+      }}
+    >
+      <Typography
+        type='h6'
+        style={{
+          marginBottom: '16px',
+          paddingLeft: 20,
+          color: theme.text.secondary,
+        }}
+      >
+        Component list
+      </Typography>
 
       <Typography
         type='a'
-        href="/" style={getSidebarItemStyle('/')}
+        href='/'
+        style={getSidebarItemStyle('/')}
         ref={pathname === '/' ? activeLinkRef : undefined}
       >
         Getting started
@@ -156,52 +206,77 @@ const SidebarContents = () => {
 
       {sections.map((row, index) => {
         const section = row.value;
-        const row_children = row.children;
+        const rowChildren = row.children;
 
-        if (!row_children || !row_children.length) {
+        if (!rowChildren?.length) {
           const path = `/${section}`;
+
           return (
             <Typography
+              key={index}
               ref={pathname === path ? activeLinkRef : undefined}
-              key = {index}
               type='a'
-              href={`/${section}`}
-              style={getSidebarItemStyle(`/${section}`)}>{row.name}
+              href={path}
+              style={getSidebarItemStyle(path)}
+            >
+              {row.name}
             </Typography>
           );
         }
+
         return (
-          <div key = {index}>
+          <div key={index}>
             <div
-              style = {{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer', paddingLeft: 20 }}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                paddingLeft: 20,
+                paddingRight: 12,
+                paddingTop: 8,
+                paddingBottom: 8,
+              }}
               onClick={() => {
-                if (expanded.has(section)) {
-                  expanded.delete(section);
+                const next = new Set(expanded);
+
+                if (next.has(section)) {
+                  next.delete(section);
                 } else {
-                  expanded.add(section);
+                  next.add(section);
                 }
-                setExpanded(Objector.deepClone(expanded));
+
+                setExpanded(next);
               }}
             >
-              <Typography type = 'body1'>{row.name}</Typography>
-              {expanded.has(section) ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              <Typography type='body1'>{row.name}</Typography>
+
+              {expanded.has(section) ? (
+                <KeyboardArrowUpIcon />
+              ) : (
+                <KeyboardArrowDownIcon />
+              )}
             </div>
-            <div>
-              {row_children.map((child) => {
-                const path = `/${section}/${child.value}`;
-                return (
-                  expanded.has(section) ?
-                  <Typography
-                    ref={pathname === path ? activeLinkRef : undefined}
-                    key = {child.value} type='a' href={`/${section}/${child.value}`}
-                    style={getSidebarItemStyle(`/${section}/${child.value}`)}
-                  >
-                    <span style = {{ paddingLeft: 10 }}></span>{child.name}
-                  </Typography>
-                    : ''
-                );
-              })}
-            </div>
+
+            {expanded.has(section) && (
+              <div>
+                {rowChildren.map((child) => {
+                  const path = `/${section}/${child.value}`;
+
+                  return (
+                    <Typography
+                      key={child.value}
+                      ref={pathname === path ? activeLinkRef : undefined}
+                      type='a'
+                      href={path}
+                      style={getSidebarItemStyle(path)}
+                    >
+                      <span style={{ paddingLeft: 10 }} />
+                      {child.name}
+                    </Typography>
+                  );
+                })}
+              </div>
+            )}
           </div>
         );
       })}
@@ -211,63 +286,103 @@ const SidebarContents = () => {
 
 const Sidebar = () => {
   const theme = useTheme();
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Return a stable structural placeholder of the identical desktop width (250px)
-  // during SSR to prevent layout shifts.
   if (!isMounted) {
     return <div style={{ width: '250px', flexShrink: 0 }} />;
   }
 
   return (
     <>
-      {/* 1. MOBILE SIDEBAR: Only visible when viewport <= 750px */}
-      <div 
-        className={Style.getStyleClassName({
-          display: 'none', 
-          '@media (max-width: 750px)': {
-            display: 'block',
-            flexShrink: 0, 
-            width: '50px', 
-            height: '100vh',            // Forces desktop container to use the full viewport height
-            position: 'sticky',
-            textAlign: 'center', 
-            paddingTop: '10px'
-          }
-        })}
+      {/* MOBILE */}
+      <div
+        className={Style.getStyleClassName(
+          Objector.extender(
+            {
+              display: 'none',
+
+              '@media (max-width: 750px)': {
+                display: 'block',
+                flexShrink: 0,
+                width: '50px',
+                position: 'sticky',
+                top: 0,
+                alignSelf: 'flex-start',
+                textAlign: 'center',
+                paddingTop: '10px',
+              },
+            },
+            {},
+          ),
+        )}
       >
-        <IconButton 
-          onClick={() => setDrawerOpen(!drawerOpen)} 
-          value='sidebar' 
-          icon={<WebIcon style={{ fontSize: 24, color: theme.text.secondary }} />} 
+        <IconButton
+          onClick={() => setDrawerOpen(!drawerOpen)}
+          value='sidebar'
+          icon={
+            <WebIcon
+              style={{
+                fontSize: 24,
+                color: theme.text.secondary,
+              }}
+            />
+          }
         />
+
         <Drawer
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
         >
-          <SidebarContents />
+          <SidebarContents
+            scrollContainerRef={{
+              current: null,
+            }}
+          />
         </Drawer>
       </div>
 
-      {/* 2. DESKTOP SIDEBAR: Only visible when viewport > 750px */}
-      <div 
-        className={Style.getStyleClassName({
-          display: 'block',
-          flexShrink: 0,
-          height: '100vh',            // Forces desktop container to use the full viewport height
-          position: 'sticky',
-          overflowY: 'auto',
-          '@media (max-width: 750px)': {
-            display: 'none'
-          }
-        })}
+      {/* DESKTOP */}
+      <div
+        ref={scrollContainerRef}
+        className={Style.getStyleClassName(
+          Objector.extender(
+            {
+              display: 'block',
+              flexShrink: 0,
+
+              position: 'sticky',
+              top: 0,
+
+              height: '100dvh',
+              minHeight: 0,
+              paddingBottom: 64,
+
+              overflowY: 'auto',
+              overflowX: 'hidden',
+
+              WebkitOverflowScrolling: 'touch',
+
+              backgroundColor: theme.background.main,
+
+              '@media (max-width: 750px)': {
+                display: 'none',
+              },
+            },
+            {},
+          ),
+        )}
       >
-        <SidebarContents />
+        <SidebarContents
+          scrollContainerRef={scrollContainerRef}
+        />
       </div>
     </>
   );

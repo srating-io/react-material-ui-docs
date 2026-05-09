@@ -101,7 +101,7 @@ export default function Page() {
   const theme = useTheme();
 
   return (
-    <div style={{ maxWidth: '900px' }}>
+    <div>
       <Typography type="h5" style={{ marginBottom: 10 }}>
         Menu Component Showcase
       </Typography>

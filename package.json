@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@esmalley/react-material-icons": "^4.0.2",
-    "@esmalley/react-material-ui": "^1.1.1",
+    "@esmalley/react-material-ui": "^1.1.2",
     "@esmalley/ts-utils": "^6.2.7",
     "cross-env": "^10.0.0",
     "next": "^16.0.0",

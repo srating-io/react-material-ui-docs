@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Header from '../components/Header';
-import { Style } from '@esmalley/ts-utils';
+import { Objector, Style } from '@esmalley/ts-utils';
 
 import Sidebar from '../components/Sidebar';
 import { ThemeProvider, Themes, Toast, UXBaseline } from '@esmalley/react-material-ui';
@@ -28,6 +28,15 @@ export const set_theme_mode = (mode: Themes) => {
   setTheme_?.(mode);
 };
 
+export const getPaddingStyle = () => {
+  return {
+    paddingTop: '64px',
+    '@media (max-width: 600px)': {
+      paddingTop: '56px'
+    }
+  }
+}
+
 const Base = ({ children }: { children: React.ReactNode }) => {
 
   const [themeMode, setTheme] = useState<Themes>(getInitialMode);
@@ -38,25 +47,21 @@ const Base = ({ children }: { children: React.ReactNode }) => {
     return () => { setTheme_ = null; };
   }, [setTheme]);
 
-
-
   return (
     <ThemeProvider theme={themeMode}>
       <UXBaseline />
       <Header />
       <div
-        className={Style.getStyleClassName({ 
-          paddingTop: '64px', // Desktop fallback
-          height: '100vh', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          overflow: 'hidden', 
-          boxSizing: 'border-box',
-          // Mobile overrides handled instantly by browser CSS
-          '@media (max-width: 599px)': {
-            paddingTop: '56px'
-          }
-        })}
+        className={Style.getStyleClassName(
+          Objector.extender({
+            height: '100vh', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            overflow: 'hidden', 
+            boxSizing: 'border-box',
+          },
+          getPaddingStyle(),
+        ))}
       >
         <div className={Style.getStyleClassName({ display: 'flex', flex: 1, overflow: 'hidden' })}>
           <Sidebar key="sidebar" />
