@@ -4,11 +4,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-import Header from 'components/Header';
+import Header from '../components/Header';
 import { Style } from '@esmalley/ts-utils';
 
-import Sidebar from 'components/Sidebar';
-import { ThemeProvider, Themes, Toast, useWindowDimensions, UXBaseline } from '@esmalley/react-material-ui';
+import Sidebar from '../components/Sidebar';
+import { ThemeProvider, Themes, Toast, UXBaseline } from '@esmalley/react-material-ui';
 import dynamic from 'next/dynamic';
 
 

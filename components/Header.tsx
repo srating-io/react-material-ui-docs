@@ -9,8 +9,8 @@ import sratingLogo from '../public/favicon-32x32.png';
 
 
 import { Objector, Style } from '@esmalley/ts-utils';
-import { set_theme_mode } from 'app/template';
-import { Dimensions, IconButton, Tooltip, Typography, useTheme, useWindowDimensions } from '@esmalley/react-material-ui';
+import { set_theme_mode } from '../app/template';
+import { IconButton, Tooltip, Typography, useTheme, useWindowDimensions } from '@esmalley/react-material-ui';
 
 const getLogoColorPrimary = (): string => {
   const theme = useTheme();
@@ -30,9 +30,7 @@ export const headerBarHeight = 64;
 const Header = () => {
   const theme = useTheme();
 
-  const { width } = useWindowDimensions() as Dimensions;
-
-
+  const { width } = useWindowDimensions();
 
   const logoPrimaryColor = getLogoColorPrimary();
   const logoSecondaryColor = getLogoColorSecondary();

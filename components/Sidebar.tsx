@@ -234,6 +234,8 @@ const Sidebar = () => {
             display: 'block',
             flexShrink: 0, 
             width: '50px', 
+            height: '100vh',            // Forces desktop container to use the full viewport height
+            position: 'sticky',
             textAlign: 'center', 
             paddingTop: '10px'
           }
@@ -256,7 +258,9 @@ const Sidebar = () => {
       <div 
         className={Style.getStyleClassName({
           display: 'block',
-          flexShrink: 0, 
+          flexShrink: 0,
+          height: '100vh',            // Forces desktop container to use the full viewport height
+          position: 'sticky',
           overflowY: 'auto',
           '@media (max-width: 750px)': {
             display: 'none'
