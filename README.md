@@ -18,10 +18,27 @@ Clone this repository and install the dependencies:
 npm install
 ```
 
-### Development
+### Working on this project
+This is indended to be worked on in tandum with [react-material-ui](https://github.com/srating-io/react-material-ui). The docs page will be the place to test and develop new feature for that package.
 
-To start the development server:
+Assuming both repo are installed and set up, to link them and develop do this:
 
+In `react-material-ui`
+```bash
+npm link
+```
+
+In `react-material-ui-docs`
+```bash
+npm link @esmalley/react-material-ui
+```
+
+In `react-material-ui`
+```bash
+npm run watch
+```
+
+In `react-material-ui-docs`
 ```bash
 npm run dev
 ```
