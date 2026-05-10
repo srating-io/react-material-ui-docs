@@ -1,6 +1,5 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
-import { createRequire } from 'module';
 import path from 'path';
 
 // 1. Resolve the path to the main entry point of the library
@@ -30,6 +29,7 @@ const commitDate = execSync('git log -1 --format=%cd')
 
 
 export default {
+  outputFileTracingRoot: path.join(__dirname, '../'), // turbopack sucks and breaks symlinks, so add this crap instead
   env: {
     VERSION: `v${depPkg.version}`,
     COMMIT_HASH: commitHash,
