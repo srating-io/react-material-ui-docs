@@ -11,6 +11,7 @@ import WebIcon from '@esmalley/react-material-icons/Web';
 import React, { useEffect, useRef, useState } from 'react';
 
 import {
+  Divider,
   Drawer,
   IconButton,
   Typography,
@@ -48,20 +49,23 @@ const SidebarContents = ({
     if (!activeEl || !container) return;
 
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const containerRect = container.getBoundingClientRect();
-        const activeRect = activeEl.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const activeRect = activeEl.getBoundingClientRect();
 
-        const targetTop =
-          activeRect.top -
-          containerRect.top +
-          container.scrollTop -
-          24;
+      const isAbove = activeRect.top < containerRect.top;
+      const isBelow = activeRect.bottom > containerRect.bottom;
 
-        container.scrollTo({
-          top: Math.max(targetTop, 0),
-          behavior: 'smooth',
-        });
+      if (!isAbove && !isBelow) return; // already fully visible
+
+      const targetTop =
+        activeRect.top -
+        containerRect.top +
+        container.scrollTop -
+        24;
+
+      container.scrollTo({
+        top: Math.max(targetTop, 0),
+        behavior: 'smooth',
       });
     });
   }, [pathname, scrollContainerRef]);
@@ -154,13 +158,13 @@ const SidebarContents = ({
     const isActive = pathname === path;
 
     const style: Record<string, unknown> = {
-      padding: '10px 0px',
+      padding: '8px 0px 8px 16px',
       cursor: 'pointer',
       color: isActive ? theme.info.main : theme.text.primary,
       transition: 'background-color 0.2s',
       display: 'block',
       textDecoration: 'none',
-      paddingLeft: 20,
+      fontSize: 13,
       '&:hover': {
         backgroundColor: theme.action.hover,
       },
@@ -185,10 +189,9 @@ const SidebarContents = ({
       }}
     >
       <Typography
-        type='h6'
+        type='body1'
         style={{
-          marginBottom: '16px',
-          paddingLeft: 20,
+          paddingLeft: 16,
           color: theme.text.secondary,
         }}
       >
@@ -231,7 +234,7 @@ const SidebarContents = ({
                 display: 'flex',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                paddingLeft: 20,
+                paddingLeft: 16,
                 paddingRight: 12,
                 paddingTop: 8,
                 paddingBottom: 8,
@@ -248,7 +251,7 @@ const SidebarContents = ({
                 setExpanded(next);
               }}
             >
-              <Typography type='body1'>{row.name}</Typography>
+              <Typography type='body2'>{row.name}</Typography>
 
               {expanded.has(section) ? (
                 <KeyboardArrowUpIcon />
@@ -308,7 +311,6 @@ const Sidebar = () => {
           Objector.extender(
             {
               display: 'none',
-
               '@media (max-width: 750px)': {
                 display: 'block',
                 flexShrink: 0,
