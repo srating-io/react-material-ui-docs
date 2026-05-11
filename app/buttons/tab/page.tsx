@@ -7,7 +7,7 @@ export default function Page() {
   const [selected, setSelected] = useState(1);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Tab</Typography>
       <Typography type='body1' style={{ marginBottom: 10 }}>
         Tabs are primarily used for navigation between different views within the same context.

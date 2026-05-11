@@ -6,7 +6,7 @@ import { CodeBlock, Typography } from "@esmalley/react-material-ui";
 
 export default function Page() {
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>CodeBlock</Typography>
       <Typography type='body1' style={{ marginBottom: 10 }}>Display chunks of code inside a block, the contents can be copied!</Typography>
 

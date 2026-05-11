@@ -23,7 +23,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Virtual Table</Typography>
 
       <Typography type='body1' style={{ marginBottom: 10 }}>This component allows you to display a lot of rows in a single table by virtualizing the results. It will also handling sorting by column!</Typography>

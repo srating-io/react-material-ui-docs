@@ -5,7 +5,7 @@ import { CodeBlock, Columns, Divider, Paper, Typography } from "@esmalley/react-
 
 export default function Page() {
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Columns</Typography>
       <Typography type='body1' style={{ marginBottom: 20 }}>
         The Columns component provides a responsive grid system. You can specify the number of columns on different screen sizes using a breakpoint.

@@ -1,5 +1,6 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
+import { NextConfig } from 'next';
 import path from 'path';
 
 // 1. Resolve the path to the main entry point of the library
@@ -26,10 +27,10 @@ const commitDate = execSync('git log -1 --format=%cd')
   .toString()
   .trim();
 
+const isProduction = process.env.NODE_ENV === 'production';
 
 
-export default {
-  outputFileTracingRoot: path.join(__dirname, '../'), // turbopack sucks and breaks symlinks, so add this crap instead
+const config: NextConfig = {
   env: {
     VERSION: `v${depPkg.version}`,
     COMMIT_HASH: commitHash,
@@ -43,6 +44,21 @@ export default {
   devIndicators: false,
   reactStrictMode: true,
 };
+
+if (!isProduction) {
+  config.outputFileTracingRoot = path.join(__dirname, '../'); // turbopack sucks and breaks symlinks, so add this crap instead
+//   outputFileTracingExcludes: {
+//   '*': [
+//     '../**/node_modules/@swc/**',
+//     '../**/.git/**',
+//     '../**/dist/**',
+//     '../**/.next/**',
+//   ],
+// },
+}
+
+
+export default config;
 
 
 

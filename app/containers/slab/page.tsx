@@ -6,7 +6,7 @@ import { CodeBlock, Divider, Slab, Typography } from "@esmalley/react-material-u
 
 export default function Page() {
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Slab</Typography>
       <Typography type='body1' style={{ marginBottom: 10 }}>
         A Slab is a specialized container for displaying information with a label and primary/secondary text.

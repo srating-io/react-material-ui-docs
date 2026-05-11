@@ -5,7 +5,7 @@ import { CodeBlock, Columns, Divider, getToaster, IconButton, Typography } from 
 
 export default function Page() {
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>IconButton</Typography>
       <Typography type='body1' style={{ marginBottom: 10 }}>
         IconButton is a compact, icon-only button designed for quick actions. It supports different shapes (standard, circle) and badges.

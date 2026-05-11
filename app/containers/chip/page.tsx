@@ -8,7 +8,7 @@ import { useState } from 'react';
 export default function Page() {
   const [clickableFilled, setClickableFilled] = useState(false);
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Chip</Typography>
       <Typography type='body1' style={{ marginBottom: 10 }}>
         Chips are compact elements that represent an attribute, entity, or action.

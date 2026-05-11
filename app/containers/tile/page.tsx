@@ -11,7 +11,7 @@ export default function Page() {
   ];
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Tile</Typography>
       <Typography type='body1' style={{ marginBottom: 20 }}>
         The Tile component is a versatile container for grouping related information.

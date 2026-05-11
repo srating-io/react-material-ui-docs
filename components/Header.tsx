@@ -4,6 +4,7 @@
 import DarkModeIcon from '@esmalley/react-material-icons/ModeNight';
 import LightModeIcon from '@esmalley/react-material-icons/LightMode';
 import { Code as GitHubIcon } from '@esmalley/react-material-icons/Code';
+import OpenInNewIcon from '@esmalley/react-material-icons/OpenInNew';
 
 import sratingLogo from '../public/favicon-32x32.png';
 
@@ -87,7 +88,14 @@ const Header = () => {
                 <><span style = {{ color: (theme.mode === 'dark' ? logoPrimaryColor : '#fff') }}>S</span><span style = {{ color: (theme.mode === 'dark' ? logoSecondaryColor : '#31ff00') }}>R{shrinkName ? '' : 'ATING'} UX</span></>
               </div>
             </Typography>
-
+            <Tooltip text={'srating.io'}>
+              <IconButton
+                style = {iconStyle}
+                value = {'srating.io'}
+                icon = {<OpenInNewIcon />}
+                onClick={() => window.open('https://srating.io', '_blank')}
+              />
+            </Tooltip>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Tooltip text={(theme.mode === 'dark' ? 'Light mode' : 'Dark mode')}>

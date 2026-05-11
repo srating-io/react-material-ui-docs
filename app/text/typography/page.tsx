@@ -6,7 +6,7 @@ import { Textor } from '@esmalley/ts-utils';
 
 export default function Page() {
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Typography</Typography>
 
       <Columns numberOfColumns={6} style = {{ alignItems: 'center' }}>

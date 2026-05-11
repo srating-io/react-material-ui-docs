@@ -314,7 +314,7 @@ const Sidebar = () => {
               '@media (max-width: 750px)': {
                 display: 'block',
                 flexShrink: 0,
-                width: '50px',
+                width: '40px',
                 position: 'sticky',
                 top: 0,
                 alignSelf: 'flex-start',

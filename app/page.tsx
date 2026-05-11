@@ -9,7 +9,7 @@ export default function Page() {
   const theme = useTheme();
 
   return (
-    <div style={{ maxWidth: '900px' }}>
+    <div>
       <Typography type="h3" style={{ fontWeight: 'bold', marginBottom: 10 }}>
         Material UI components for react.
       </Typography>

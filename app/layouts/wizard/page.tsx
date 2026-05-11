@@ -84,7 +84,7 @@ export default function Page() {
   steps.push(stepTwo);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Wizard</Typography>
       <Typography type='body1' style={{ marginBottom: 20 }}>
         The Wizard component is used to create a step-by-step guide. It manages transitions through various steps, handles validation at each step, and allows customization of back and next buttons.

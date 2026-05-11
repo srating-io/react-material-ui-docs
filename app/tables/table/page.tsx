@@ -23,7 +23,7 @@ export default function Page() {
   ];
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Table</Typography>
 
       <Typography type='h6' style={{ marginBottom: 10 }}>Standard Table</Typography>

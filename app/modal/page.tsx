@@ -43,7 +43,7 @@ const CustomModal = (props) => {
 
 export default function Page() {
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Modal</Typography>
 
       <Typography type='h6' style={{ marginBottom: 10 }}>Standard</Typography>

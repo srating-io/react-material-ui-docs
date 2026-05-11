@@ -31,7 +31,7 @@ export default function LoadingPage() {
   }, [backdropOpen]);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <Typography type='h5' style={{ marginBottom: 20 }}>Loading</Typography>
       <Typography type='body1' style={{ marginBottom: 20 }}>
         The Loading component provides various ways to indicate progress or loading states, including circular and linear progress bars, backfor, and skeletons.

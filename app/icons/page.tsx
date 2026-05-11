@@ -48,9 +48,11 @@ export default function IconGalleryPage() {
   const inputHandler = new Inputs();
 
   const allFiltered = useMemo(() => {
-    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(safeQuery, 'i');
-    return manifest[category].filter((name) => regex.test(name));
+    const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    return manifest[category].filter((name: string) => {
+      const lower = name.toLowerCase();
+      return words.every((word) => lower.includes(word));
+    });
   }, [query, category]);
 
   const visible = useMemo(

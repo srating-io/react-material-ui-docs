@@ -1,12 +1,17 @@
 'use client';
 
 import AddIcon from '@esmalley/react-material-icons/Add';
-import { CodeBlock, Divider, IconButton, Paper, Typography } from '@esmalley/react-material-ui';
+import { CodeBlock, Columns, Divider, IconButton, Paper, Typography } from '@esmalley/react-material-ui';
 
 export default function Page() {
   const buttons = [
     <IconButton icon = {<AddIcon style = {{ fontSize: 20 }} />} type = 'circle' value={1} onClick={() => alert('you clicked a button')} />,
   ];
+
+  const papers: React.JSX.Element[] = [];
+  for (let i = 1; i <= 10; i++) {
+    papers.push(<Paper elevation={i} style={{ height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{i}</Paper>);
+  }
 
   return (
     <div>
@@ -27,17 +32,21 @@ export default function Page() {
         `} />
        <Divider />
 
-       <Typography type='h6' style={{ marginBottom: 10 }}>Different elevation</Typography>
-       <Paper elevation={10} style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>10</Paper>
+       <Typography type='h6' style={{ marginBottom: 10 }}>Different elevations</Typography>
+       <Columns numberOfColumns={10}>
+        {papers}
+       </Columns>
        <CodeBlock code={`
-          import { Paper } from '@esmalley/react-material-ui';
+          import { Paper, Columns } from '@esmalley/react-material-ui';
 
-          <Paper
-            elevation={10}
-            style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-          >
-            10
-          </Paper>
+          const papers: React.JSX.Element[] = [];
+          for (let i = 1; i <= 10; i++) {
+            papers.push(<Paper elevation={i} style={{ height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{i}</Paper>);
+          }
+
+          <Columns numberOfColumns={10}>
+            {papers}
+          </Columns>
         `} />
        <Divider />
 
