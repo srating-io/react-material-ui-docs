@@ -4,6 +4,21 @@ import TextFieldsIcon from '@esmalley/react-material-icons/TextFields';
 import DownloadingIcon from '@esmalley/react-material-icons/Downloading';
 import PhotoIcon from '@esmalley/react-material-icons/Photo';
 import { CodeBlock, Columns, Divider, Tile, Typography, useTheme } from '@esmalley/react-material-ui';
+import { Metadata } from 'next';
+
+
+export const metadata: Metadata = {
+  title: 'sRating | Material UI',
+  description: 'React material ui components',
+  openGraph: {
+    title: 'ux.srating.io',
+    description: 'React material ui components',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'React material ui components',
+  },
+};
 
 export default function Page() {
   const theme = useTheme();
