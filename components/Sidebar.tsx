@@ -18,6 +18,9 @@ import {
   useTheme,
 } from '@esmalley/react-material-ui';
 
+
+// todo to fix the flashing have to use stupid nextjs router and <Link> otherwise href does a page reload
+
 const SidebarContents = ({
   scrollContainerRef,
 }: {
@@ -139,6 +142,10 @@ const SidebarContents = ({
     {
       value: 'icons',
       name: 'Icons',
+    },
+    {
+      value: 'themeprovider',
+      name: 'ThemeProvider',
     },
     {
       value: 'modal',

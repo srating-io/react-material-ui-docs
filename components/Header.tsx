@@ -10,8 +10,8 @@ import sratingLogo from '../public/favicon-32x32.png';
 
 
 import { Objector, Style } from '@esmalley/ts-utils';
-import { set_theme_mode } from '../app/template';
 import { IconButton, Tooltip, Typography, useTheme, useWindowDimensions } from '@esmalley/react-material-ui';
+import { set_theme_mode } from '../app/contents';
 
 const getLogoColorPrimary = (): string => {
   const theme = useTheme();

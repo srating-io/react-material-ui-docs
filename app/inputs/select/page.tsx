@@ -8,7 +8,7 @@ type ControlledSelectProps = Omit<SelectInputProps, 'options'>;
 
 const ControlledSelect = (props: ControlledSelectProps) => {
   const { value: propsValue, ...otherProps } = props;
-  const [value, setValue] = useState(propsValue || '');
+  const [value, setValue] = useState<string | number | null>(propsValue || '');
   const inputHandler = new Inputs();
 
   const options = [

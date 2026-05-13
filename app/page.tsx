@@ -4,21 +4,7 @@ import TextFieldsIcon from '@esmalley/react-material-icons/TextFields';
 import DownloadingIcon from '@esmalley/react-material-icons/Downloading';
 import PhotoIcon from '@esmalley/react-material-icons/Photo';
 import { CodeBlock, Columns, Divider, Tile, Typography, useTheme } from '@esmalley/react-material-ui';
-import { Metadata } from 'next';
 
-
-export const metadata: Metadata = {
-  title: 'sRating | Material UI',
-  description: 'React material ui components',
-  openGraph: {
-    title: 'ux.srating.io',
-    description: 'React material ui components',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'React material ui components',
-  },
-};
 
 export default function Page() {
   const theme = useTheme();
@@ -110,16 +96,21 @@ export default function Page() {
       </section>
 
       <section style={{ marginTop: 40 }}>
-        <Typography type="h6">Implementation Example</Typography>
+        <Typography type="h6">Set Up Example</Typography>
+        <Typography type = 'caption'>Your app must be wrapped in a ThemeProvider.</Typography>
         <CodeBlock code={`
-          import { Button, Typography, Toast, getToaster } from '@esmalley/react-material-ui';
+          import { ThemeProvider, UXBaseline, Button, Typography, Toast, getToaster } from '@esmalley/react-material-ui';
 
-          const MyComponent = () => (
-            <div style={{ padding: '20px' }}>
-              <Typography type="h4">Hello World</Typography>
-              <Button title="Action" onClick={() => getToaster().add('Success!', 'success')} />
-              <Toast />
-            </div>
+          const App = () => (
+            <ThemeProvider theme={'dark'}>
+              {/* The UXBaseline is optional, it provides you some basic css styling*/}
+              <UXBaseline />
+              <div style={{ padding: '20px' }}>
+                <Typography type="h4">Hello World</Typography>
+                <Button title="Action" onClick={() => getToaster().add('Success!', 'success')} />
+                <Toast />
+              </div>
+            </ThemeProvider>
           );
         `} />
       </section>

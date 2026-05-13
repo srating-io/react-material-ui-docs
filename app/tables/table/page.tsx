@@ -1,6 +1,6 @@
 'use client';
 
-import { Divider, Table, Tbody, Td, Thead, Tr, Typography } from "@esmalley/react-material-ui";
+import { CodeBlock, Divider, getToaster, Table, Tbody, Td, Thead, Tr, Typography } from "@esmalley/react-material-ui";
 
 
 export default function Page() {
@@ -27,7 +27,7 @@ export default function Page() {
       <Typography type='h5' style={{ marginBottom: 20 }}>Table</Typography>
 
       <Typography type='h6' style={{ marginBottom: 10 }}>Standard Table</Typography>
-      <Table>
+      <Table style = {{ padding: 5 }}>
         <Thead>
           <Tr>
             {columns.map((col) => <th key={col.accessor}>{col.header}</th>)}
@@ -35,7 +35,7 @@ export default function Page() {
         </Thead>
         <Tbody>
           {data.map((row) => (
-            <Tr key={row.id}>
+            <Tr key={row.id} onClick={(e) => getToaster().add('Clicked row')}>
               <Td>{row.id}</Td>
               <Td>{row.name}</Td>
               <Td>{row.email}</Td>
@@ -44,6 +44,45 @@ export default function Page() {
           ))}
         </Tbody>
       </Table>
+
+      <CodeBlock code = {`
+        import { Table, Tbody, Td, Thead, Tr, Typography, getToaster } from "@esmalley/react-material-ui";
+        const columns = [
+          { header: 'ID', accessor: 'id' },
+          { header: 'Name', accessor: 'name' },
+          { header: 'Email', accessor: 'email' },
+          { header: 'Role', accessor: 'role' },
+        ];
+
+        const data = [
+          { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+          { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
+          { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'User' },
+          { id: 4, name: 'Alice Brown', email: 'alice@example.com', role: 'Editor' },
+          { id: 5, name: 'Charlie Davis', email: 'charlie@example.com', role: 'User' },
+          { id: 6, name: 'Eve White', email: 'eve@example.com', role: 'Admin' },
+          { id: 7, name: 'Frank Miller', email: 'frank@example.com', role: 'User' },
+          { id: 8, name: 'Grace Lee', email: 'grace@example.com', role: 'Editor' },
+        ];
+
+        <Table style = {{ padding: 5 }}>
+          <Thead>
+            <Tr>
+              {columns.map((col) => <th key={col.accessor}>{col.header}</th>)}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data.map((row) => (
+              <Tr key={row.id} onClick={(e) => getToaster().add('Clicked row')}>
+                <Td>{row.id}</Td>
+                <Td>{row.name}</Td>
+                <Td>{row.email}</Td>
+                <Td>{row.role}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      `} />
 
       <Divider style={{ margin: '40px 0' }} />
 
