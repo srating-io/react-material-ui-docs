@@ -5,12 +5,12 @@ import { CodeBlock, Columns, Divider, IconButton, Paper, Typography } from '@esm
 
 export default function Page() {
   const buttons = [
-    <IconButton icon = {<AddIcon style = {{ fontSize: 20 }} />} type = 'circle' value={1} onClick={() => alert('you clicked a button')} />,
+    <IconButton key = {'icon-button'} icon = {<AddIcon style = {{ fontSize: 20 }} />} type = 'circle' value={1} onClick={() => alert('you clicked a button')} />,
   ];
 
   const papers: React.JSX.Element[] = [];
   for (let i = 1; i <= 10; i++) {
-    papers.push(<Paper elevation={i} style={{ height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{i}</Paper>);
+    papers.push(<Paper key = {i} elevation={i} style={{ height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{i}</Paper>);
   }
 
   return (

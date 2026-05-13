@@ -3,6 +3,7 @@
 import TextFieldsIcon from '@esmalley/react-material-icons/TextFields';
 import DownloadingIcon from '@esmalley/react-material-icons/Downloading';
 import PhotoIcon from '@esmalley/react-material-icons/Photo';
+import FormatPaintIcon from '@esmalley/react-material-icons/FormatPaint';
 import { CodeBlock, Columns, Divider, Tile, Typography, useTheme } from '@esmalley/react-material-ui';
 import { useRouter } from 'next/navigation';
 
@@ -63,6 +64,12 @@ export default function Page() {
             secondary="Text, Select, Pickers"
             icon={<TextFieldsIcon style={{ color: theme.info.main, fontSize: 24 }} />}
             onClick={() => router.push('/inputs/text') }
+          />
+          <Tile
+            primary="Icons"
+            secondary="Material design icons"
+            icon={<FormatPaintIcon style={{ color: theme.info.main, fontSize: 24 }} />}
+            onClick={() => router.push('/icons') }
           />
           <Tile
             primary="Buttons"

@@ -7,7 +7,7 @@ import { Button, CodeBlock, Divider, getToaster, Tile, Typography } from '@esmal
 
 export default function Page() {
   const buttons = [
-    <Button title='A button' value={1} onClick={() => getToaster().add('You clicked a button', 'success')} />,
+    <Button key = {'button'} title='A button' value={1} onClick={() => getToaster().add('You clicked a button', 'success')} />,
   ];
 
   return (
