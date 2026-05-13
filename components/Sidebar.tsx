@@ -11,15 +11,13 @@ import WebIcon from '@esmalley/react-material-icons/Web';
 import React, { useEffect, useRef, useState } from 'react';
 
 import {
-  Divider,
   Drawer,
   IconButton,
   Typography,
   useTheme,
 } from '@esmalley/react-material-ui';
+import Link from 'next/link';
 
-
-// todo to fix the flashing have to use stupid nextjs router and <Link> otherwise href does a page reload
 
 const SidebarContents = ({
   scrollContainerRef,
@@ -205,14 +203,13 @@ const SidebarContents = ({
         Component list
       </Typography>
 
-      <Typography
-        type='a'
+      <Link
         href='/'
-        style={getSidebarItemStyle('/')}
+        className={Style.getStyleClassName(getSidebarItemStyle('/'))}
         ref={pathname === '/' ? activeLinkRef : undefined}
       >
         Getting started
-      </Typography>
+      </Link>
 
       {sections.map((row, index) => {
         const section = row.value;
@@ -222,15 +219,14 @@ const SidebarContents = ({
           const path = `/${section}`;
 
           return (
-            <Typography
-              key={index}
+            <Link
+              key = {index}
               ref={pathname === path ? activeLinkRef : undefined}
-              type='a'
               href={path}
-              style={getSidebarItemStyle(path)}
+              className={Style.getStyleClassName(getSidebarItemStyle(path))}
             >
               {row.name}
-            </Typography>
+            </Link>
           );
         }
 
@@ -273,16 +269,15 @@ const SidebarContents = ({
                   const path = `/${section}/${child.value}`;
 
                   return (
-                    <Typography
+                    <Link
                       key={child.value}
                       ref={pathname === path ? activeLinkRef : undefined}
-                      type='a'
                       href={path}
-                      style={getSidebarItemStyle(path)}
+                      className={Style.getStyleClassName(getSidebarItemStyle(path))}
                     >
                       <span style={{ paddingLeft: 10 }} />
                       {child.name}
-                    </Typography>
+                    </Link>
                   );
                 })}
               </div>
