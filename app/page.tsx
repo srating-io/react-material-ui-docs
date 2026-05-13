@@ -4,10 +4,12 @@ import TextFieldsIcon from '@esmalley/react-material-icons/TextFields';
 import DownloadingIcon from '@esmalley/react-material-icons/Downloading';
 import PhotoIcon from '@esmalley/react-material-icons/Photo';
 import { CodeBlock, Columns, Divider, Tile, Typography, useTheme } from '@esmalley/react-material-ui';
+import { useRouter } from 'next/navigation';
 
 
 export default function Page() {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
     <div>
@@ -60,37 +62,37 @@ export default function Page() {
             primary="Inputs"
             secondary="Text, Select, Pickers"
             icon={<TextFieldsIcon style={{ color: theme.info.main, fontSize: 24 }} />}
-            onClick={() => { window.location.href = '/inputs/text'; }}
+            onClick={() => router.push('/inputs/text') }
           />
           <Tile
             primary="Buttons"
             secondary="Standard, Icon, Tabs"
             icon={<PhotoIcon style={{ color: theme.info.main, fontSize: 24 }} />}
-            onClick={() => { window.location.href = '/buttons/button'; }}
+            onClick={() => router.push('/buttons/button') }
           />
           <Tile
             primary="Overlays"
             secondary="Toast, Tooltip, Drawer"
             icon={<DownloadingIcon style={{ color: theme.info.main, fontSize: 24 }} />}
-            onClick={() => { window.location.href = '/overlay/toast'; }}
+            onClick={() => router.push('/overlay/toast') }
           />
           <Tile
             primary="Containers"
             secondary="Tile, Paper, Chip"
             icon={<PhotoIcon style={{ color: theme.info.main, fontSize: 24 }} />}
-            onClick={() => { window.location.href = '/containers/tile'; }}
+            onClick={() => router.push('/containers/tile') }
           />
           <Tile
             primary="Tables"
             secondary="Standard, Virtual"
             icon={<TextFieldsIcon style={{ color: theme.info.main, fontSize: 24 }} />}
-            onClick={() => { window.location.href = '/tables/table'; }}
+            onClick={() => router.push('/tables/table') }
           />
            <Tile
             primary="Text"
             secondary="Typography, Code"
             icon={<PhotoIcon style={{ color: theme.info.main, fontSize: 24 }} />}
-            onClick={() => { window.location.href = '/text/typography'; }}
+            onClick={() => router.push('/text/typography') }
           />
         </Columns>
       </section>
