@@ -105,7 +105,7 @@ export default function Page() {
       </section>
 
       <section style={{ marginTop: 40 }}>
-        <Typography type="h6">Set Up Example</Typography>
+        <Typography type="h6">Set up</Typography>
         <Typography type = 'caption'>Your app must be wrapped in a ThemeProvider.</Typography>
         <CodeBlock code={`
           import { ThemeProvider, UXBaseline, Button, Typography, Toast, getToaster } from '@esmalley/react-material-ui';

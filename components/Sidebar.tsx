@@ -21,8 +21,10 @@ import Link from 'next/link';
 
 const SidebarContents = ({
   scrollContainerRef,
+  onClick,
 }: {
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+  onClick?: () => void;
 }) => {
   const pathname = usePathname();
   const theme = useTheme();
@@ -207,6 +209,7 @@ const SidebarContents = ({
         href='/'
         className={Style.getStyleClassName(getSidebarItemStyle('/'))}
         ref={pathname === '/' ? activeLinkRef : undefined}
+        onClick={onClick}
       >
         Getting started
       </Link>
@@ -224,6 +227,7 @@ const SidebarContents = ({
               ref={pathname === path ? activeLinkRef : undefined}
               href={path}
               className={Style.getStyleClassName(getSidebarItemStyle(path))}
+              onClick={onClick}
             >
               {row.name}
             </Link>
@@ -274,6 +278,7 @@ const SidebarContents = ({
                       ref={pathname === path ? activeLinkRef : undefined}
                       href={path}
                       className={Style.getStyleClassName(getSidebarItemStyle(path))}
+                      onClick={onClick}
                     >
                       <span style={{ paddingLeft: 10 }} />
                       {child.name}
@@ -349,6 +354,7 @@ const Sidebar = () => {
             scrollContainerRef={{
               current: null,
             }}
+            onClick={() => setDrawerOpen(false)}
           />
         </Drawer>
       </div>
