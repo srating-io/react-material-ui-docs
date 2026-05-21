@@ -12,7 +12,7 @@ export default function Page() {
 
        <Typography type='h6' style={{ marginTop: 40, marginBottom: 10 }}>Positions</Typography>
        <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
-         <Tooltip text='Top'>
+         <Tooltip text='Top' position='top'>
            <IconButton icon={<InfoIcon style = {{ fontSize: 30 }} />} value={1} onClick={() => {}} />
          </Tooltip>
          <Tooltip text='Left' position='left'>
@@ -66,8 +66,6 @@ export default function Page() {
        >
          <IconButton icon={<InfoIcon style = {{ fontSize: 30 }} />} value={8} onClick={() => {}} />
        </Tooltip>
-
-       <Typography type='h6' style={{ marginTop: 40, marginBottom: 10 }}>Code Example</Typography>
     </div>
   );
 }
