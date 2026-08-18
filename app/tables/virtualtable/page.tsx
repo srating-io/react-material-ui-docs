@@ -5,10 +5,10 @@ import { useMemo } from 'react';
 
 export default function Page() {
   const columns: TableColumnsType = {
-    id: { id: 'id', numeric: false, label: 'ID', tooltip: 'Tooltip for ID', organization_ids: [], views: [], graphable: false },
-    name: { id: 'name', numeric: false, label: 'Name', tooltip: 'Tooltip for Name', organization_ids: [], views: [], graphable: false },
-    email: { id: 'email', numeric: false, label: 'Email', tooltip: 'Tooltip for Email', organization_ids: [], views: [], graphable: false },
-    role: { id: 'role', numeric: false, label: 'Role', tooltip: 'Tooltip for Role', organization_ids: [], views: [], graphable: false },
+    id: { id: 'id', numeric: false, getLabel: () => 'ID', getTooltip: () => 'Tooltip for ID', organization_ids: [], getViews: () => [], graphable: false },
+    name: { id: 'name', numeric: false, getLabel: () => 'Name', getTooltip: () => 'Tooltip for Name', organization_ids: [], getViews: () => [], graphable: false },
+    email: { id: 'email', numeric: false, getLabel: () => 'Email', getTooltip: () => 'Tooltip for Email', organization_ids: [], getViews: () => [], graphable: false },
+    role: { id: 'role', numeric: false, getLabel: () => 'Role', getTooltip: () => 'Tooltip for Role', organization_ids: [], getViews: () => [], graphable: false },
   };
 
   const displayColumns = ['id', 'name', 'email', 'role'];
@@ -44,10 +44,10 @@ export default function Page() {
         import { TableColumnsType, VirtualTable } from '@esmalley/react-material-ui';
 
         const columns: TableColumnsType = {
-          id: { id: 'id', numeric: false, label: 'ID', tooltip: 'Tooltip for ID', organization_ids: [], views: [], graphable: false },
-          name: { id: 'name', numeric: false, label: 'Name', tooltip: 'Tooltip for Name', organization_ids: [], views: [], graphable: false },
-          email: { id: 'email', numeric: false, label: 'Email', tooltip: 'Tooltip for Email', organization_ids: [], views: [], graphable: false },
-          role: { id: 'role', numeric: false, label: 'Role', tooltip: 'Tooltip for Role', organization_ids: [], views: [], graphable: false },
+          id: { id: 'id', numeric: false, getLabel: () => 'ID', getTooltip: () => 'Tooltip for ID', organization_ids: [], getViews: () => [], graphable: false },
+          name: { id: 'name', numeric: false, getLabel: () => 'Name', getTooltip: () => 'Tooltip for Name', organization_ids: [], getViews: () => [], graphable: false },
+          email: { id: 'email', numeric: false, getLabel: () => 'Email', getTooltip: () => 'Tooltip for Email', organization_ids: [], getViews: () => [], graphable: false },
+          role: { id: 'role', numeric: false, getLabel: () => 'Role', getTooltip: () => 'Tooltip for Role', organization_ids: [], getViews: () => [], graphable: false },
         };
 
         const displayColumns = ['id', 'name', 'email', 'role'];
