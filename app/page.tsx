@@ -48,8 +48,8 @@ export default function Page() {
         <Typography type="body2" style={{ marginTop: 10 }}>
           Bring powerful components to your React application with one command:
         </Typography>
-        <CodeBlock code={`
-          npm install @esmalley/react-material-ui @esmally/react-material-icons @esmalley/ts-utils
+        <CodeBlock lang='sh' code={`
+          npm install @esmalley/react-material-ui @esmalley/react-material-icons @esmalley/ts-utils typeface-roboto
         `} />
       </section>
 
@@ -106,13 +106,13 @@ export default function Page() {
 
       <section style={{ marginTop: 40 }}>
         <Typography type="h6">Set up</Typography>
-        <Typography type = 'caption'>Your app must be wrapped in a ThemeProvider.</Typography>
+        <Typography type='caption'>Your app must be wrapped in a ThemeProvider.</Typography>
         <CodeBlock code={`
           import { ThemeProvider, UXBaseline, Button, Typography, Toast, getToaster } from '@esmalley/react-material-ui';
 
           const App = () => (
             <ThemeProvider theme={'dark'}>
-              {/* The UXBaseline is optional, it provides you some basic css styling*/}
+              {/* UXBaseline sets the body background, text color and font stack from the theme */}
               <UXBaseline />
               <div style={{ padding: '20px' }}>
                 <Typography type="h4">Hello World</Typography>

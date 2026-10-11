@@ -1,22 +1,19 @@
 'use client';
 
-import { Button, CodeBlock, Paper, Plane, Typography } from '@esmalley/react-material-ui';
-import { useState } from 'react';
+import { Button, CodeBlock, Divider, Paper, Plane, Typography } from '@esmalley/react-material-ui';
+import PropsTable from '../../../components/PropsTable';
+import React, { useState } from 'react';
 
 export default function Page() {
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
-  const handleToggle = (e) => {
-    setAnchor(e.currentTarget);
-    if (open) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+  const handleToggle = (e: React.SyntheticEvent) => {
+    setAnchor(e.currentTarget as HTMLElement);
+    setOpen(!open);
   };
 
-  const handleClose = (e: MouseEvent) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -25,7 +22,9 @@ export default function Page() {
       <Typography type='h5' style={{ marginBottom: 20 }}>Plane</Typography>
 
       <Typography type='body1'>The plane component is a popover which can contain any contents.</Typography>
-      <Typography type='body1' style={{ marginBottom: 10 }}>It can be anchored to display near an element (like a button which triggers it).</Typography>
+      <Typography type='body1' style={{ marginBottom: 10 }}>It can be anchored to display near an element (like a button which triggers it). Plane flips above the anchor when there is not enough room below, and closes on Escape, on a click outside, or on a backdrop click.</Typography>
+
+      <Typography type='h6' style={{ marginBottom: 10 }}>Anchored popover</Typography>
       <Button
         title='Toggle Plane'
         value={1}
@@ -43,22 +42,19 @@ export default function Page() {
         </Paper>
       </Plane>
 
-      <CodeBlock code = {`
+      <CodeBlock code={`
+        import { useState } from 'react';
         import { Button, Paper, Plane, Typography } from '@esmalley/react-material-ui';
 
         const [open, setOpen] = useState(false);
         const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
-        const handleToggle = (e) => {
-          setAnchor(e.currentTarget);
-          if (open) {
-            setOpen(false);
-          } else {
-            setOpen(true);
-          }
+        const handleToggle = (e: React.SyntheticEvent) => {
+          setAnchor(e.currentTarget as HTMLElement);
+          setOpen(!open);
         };
 
-        const handleClose = (e: MouseEvent) => {
+        const handleClose = () => {
           setOpen(false);
         };
 
@@ -79,6 +75,18 @@ export default function Page() {
           </Paper>
         </Plane>
       `} />
+      <Divider />
+
+      <Typography type='h6' style={{ marginBottom: 10 }}>Props</Typography>
+      <PropsTable
+        note='Plane is a plain positioned container, not a Paper, so give the child its own background. It closes on Escape, on a click outside and on a backdrop click.'
+        rows={[
+          { name: 'open', type: 'boolean', required: true, description: 'Whether the popover is showing.' },
+          { name: 'anchor', type: 'HTMLElement | null', required: true, description: 'The element to position against.' },
+          { name: 'onClose', type: '(e) => void', required: true, description: 'Called on Escape, outside click and backdrop click.' },
+          { name: 'children', type: 'React.ReactNode', required: true, description: 'Popover content.' },
+        ]}
+      />
     </div>
   );
 }

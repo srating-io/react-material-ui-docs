@@ -37,6 +37,7 @@ const SidebarContents = ({
       'containers',
       'layouts',
       'text',
+      'display',
       'buttons',
       'overlay',
       'tables',
@@ -75,6 +76,14 @@ const SidebarContents = ({
 
   const sections = [
     {
+      value: 'themeprovider',
+      name: 'ThemeProvider',
+    },
+    {
+      value: 'hooks',
+      name: 'Hooks',
+    },
+    {
       value: 'layouts',
       name: 'Layouts',
       children: [
@@ -101,15 +110,25 @@ const SidebarContents = ({
       ],
     },
     {
+      value: 'display',
+      name: 'Display',
+      children: [
+        { value: 'divider', name: 'Divider' },
+      ],
+    },
+    {
       value: 'inputs',
       name: 'Inputs',
       children: [
-        { value: 'text', name: 'Text' },
-        { value: 'date', name: 'Date' },
-        { value: 'select', name: 'Select' },
-        { value: 'multiple', name: 'Multiple' },
-        { value: 'toggle', name: 'Toggle' },
+        { value: 'text', name: 'TextInput' },
         { value: 'textarea', name: 'Textarea' },
+        { value: 'select', name: 'Select' },
+        { value: 'multiselect', name: 'MultiSelect' },
+        { value: 'date', name: 'DateInput' },
+        { value: 'calendar', name: 'Calendar' },
+        { value: 'multiple', name: 'MultiPicker' },
+        { value: 'toggle', name: 'Switch' },
+        { value: 'validation', name: 'Forms & validation' },
       ],
     },
     {
@@ -136,16 +155,12 @@ const SidebarContents = ({
       name: 'Tables',
       children: [
         { value: 'table', name: 'Table' },
-        { value: 'virtualtable', name: 'Virtual table' },
+        { value: 'virtualtable', name: 'VirtualTable' },
       ],
     },
     {
       value: 'icons',
       name: 'Icons',
-    },
-    {
-      value: 'themeprovider',
-      name: 'ThemeProvider',
     },
     {
       value: 'modal',

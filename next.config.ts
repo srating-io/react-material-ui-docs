@@ -20,17 +20,17 @@ export default async function config(): Promise<NextConfig> {
   const depPkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 
 
-  const commitHash = execSync('git rev-parse --short HEAD')
-    .toString()
-    .trim();
+  // Optional build metadata. Not every build runs inside a git checkout.
+  const gitInfo = (command: string): string => {
+    try {
+      return execSync(command, { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+    } catch {
+      return 'unknown';
+    }
+  };
 
-
-  const commitDate = execSync('git log -1 --format=%cd')
-    .toString()
-    .trim();
-
-  const isProduction = process.env.NODE_ENV === 'production';
-
+  const commitHash = gitInfo('git rev-parse --short HEAD');
+  const commitDate = gitInfo('git log -1 --format=%cd');
 
   const config: NextConfig = {
     env: {
@@ -47,17 +47,10 @@ export default async function config(): Promise<NextConfig> {
     reactStrictMode: true,
   };
 
-  if (!isProduction) {
-    config.outputFileTracingRoot = path.join(__dirname, '../'); // turbopack sucks and breaks symlinks, so add this crap instead
-  //   outputFileTracingExcludes: {
-  //   '*': [
-  //     '../**/node_modules/@swc/**',
-  //     '../**/.git/**',
-  //     '../**/dist/**',
-  //     '../**/.next/**',
-  //   ],
-  // },
-  }
+  // Turbopack does not follow the symlink that 'npm link @esmalley/react-material-ui' creates,
+  // so the tracing root has to cover the parent directory. This is needed in production builds
+  // too, not just dev - without it 'next build' fails to resolve the library entirely.
+  config.outputFileTracingRoot = path.join(__dirname, '../');
 
   return config;
 }

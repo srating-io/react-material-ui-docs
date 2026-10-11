@@ -8,7 +8,7 @@ import Contents from './contents';
 import React from 'react';
 import { Metadata } from 'next';
 
-export const metadata: Metadata = {
+export const metadata: Metadata={
   title: 'sRating | Material UI',
   description: 'React material ui components',
   openGraph: {
@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: {children: React.ReactNod
   return (
     <html lang="en">
       <body>
-        <div id = 'menu-root'></div>
+        <div id='menu-root'></div>
         <Contents>{children}</Contents>
       </body>
     </html>

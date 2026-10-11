@@ -3,11 +3,12 @@
 import InfoIcon from '@esmalley/react-material-icons/Info';
 import MouseIcon from '@esmalley/react-material-icons/Mouse';
 import { Button, CodeBlock, Divider, getToaster, Tile, Typography } from '@esmalley/react-material-ui';
+import PropsTable from '../../../components/PropsTable';
 
 
 export default function Page() {
   const buttons = [
-    <Button key = {'button'} title='A button' value={1} onClick={() => getToaster().add('You clicked a button', 'success')} />,
+    <Button key={'button'} title='A button' value={1} onClick={() => getToaster().add('You clicked a button', 'success')} />,
   ];
 
   return (
@@ -56,7 +57,7 @@ export default function Page() {
       <Divider />
 
       <Typography type='h6' style={{ marginBottom: 10 }}>Buttons</Typography>
-      <Tile primary='Primary line' secondary='Secondary ' icon={<InfoIcon style={{ fontSize: 20 }} />} buttons={buttons} />
+      <Tile primary='Primary line' secondary='Secondary line' icon={<InfoIcon style={{ fontSize: 20 }} />} buttons={buttons} />
       <CodeBlock code={`
         import { Tile, Button, getToaster } from '@esmalley/react-material-ui';
         import InfoIcon from '@esmalley/react-material-icons/Info';
@@ -88,6 +89,20 @@ export default function Page() {
           />
         `} />
       <Divider />
+
+      <Typography type='h6' style={{ marginBottom: 10 }}>Props</Typography>
+      <PropsTable
+        note='Tile adds a pointer cursor and hover wash when onClick is set, but it is not keyboard operable - use a Button or IconButton where that matters.'
+        rows={[
+          { name: 'primary', type: 'string', required: true, description: 'Main line.' },
+          { name: 'secondary', type: 'string', description: 'Smaller italic second line.' },
+          { name: 'icon', type: 'React.JSX.Element', description: 'Leading icon.' },
+          { name: 'iconStyle', type: 'React.CSSProperties', default: '{}', description: 'Styles the icon container.' },
+          { name: 'buttons', type: 'React.JSX.Element[]', default: '[]', description: 'Trailing actions.' },
+          { name: 'onClick', type: '(e: React.MouseEvent) => void', description: 'Makes the whole tile clickable.' },
+          { name: 'style', type: 'React.CSSProperties', default: '{}', description: 'Merged last. Accepts a nested hover block.' },
+        ]}
+      />
     </div>
   );
 }

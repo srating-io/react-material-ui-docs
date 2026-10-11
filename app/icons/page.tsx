@@ -36,7 +36,7 @@ const DynamicIcon = (
 
 const CHUNK_SIZE = 50;
 
-export default function IconGalleryPage() {
+export default function Page() {
   const theme = useTheme();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('filled');
@@ -115,7 +115,7 @@ export default function IconGalleryPage() {
               key={name}
               icon={<DynamicIcon name={name} color={theme.text?.primary || '#000'} />}
               primary={name}
-              style = {{ padding: '10px 0px' }}
+              style={{ padding: '10px 0px' }}
               onClick={() => setSelected(name)}
             />
           ))}
@@ -129,8 +129,8 @@ export default function IconGalleryPage() {
           </div>
         )}
       </div>
-      <Modal open={selected !== ''} onClose={() => setSelected('')} paperStyle={{ maxWidth: 800 }} type = 'custom'>
-        <CodeBlock code = {importString} style = {{ padding: '10px 20px' }}/>
+      <Modal open={selected !== ''} onClose={() => setSelected('')} paperStyle={{ maxWidth: 800 }} type='custom'>
+        <CodeBlock code={importString} style={{ padding: '10px 20px' }}/>
       </Modal>
     </div>
   );

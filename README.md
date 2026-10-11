@@ -19,7 +19,7 @@ npm install
 ```
 
 ### Working on this project
-This is indended to be worked on in tandum with [react-material-ui](https://github.com/srating-io/react-material-ui). The docs page will be the place to test and develop new feature for that package.
+This is intended to be worked on in tandem with [react-material-ui](https://github.com/srating-io/react-material-ui). The docs page will be the place to test and develop new feature for that package.
 
 Assuming both repo are installed and set up, to link them and develop do this:
 
@@ -65,10 +65,11 @@ Alternatively, you can use `npm run cluster` to run the production server using 
 
 This project uses the Next.js App Router. To add a new documentation page for a component:
 
-1.  Navigate to the `app/` directory.
-2.  Create a new folder under `app/` corresponding to your component's name (e.g., `app/my-component/`).
-3.  Inside that folder, create a `page.tsx` file.
-4.  Implement the component showcase within `page.tsx`.
+1.  Create `app/<group>/<name>/page.tsx` (or `app/<name>/page.tsx` for a top-level entry).
+2.  Implement the showcase in `page.tsx`, following the template in [`.agents/conventions.md`](.agents/conventions.md).
+3.  **Add a matching entry to the `sections` array in `components/Sidebar.tsx`.** A page without one has no link and is unreachable.
+4.  If you added a new group that should start expanded, add its `value` to the default-expanded set in the same file.
+5.  Run `npm run coverage` to confirm no library export is left undocumented.
 
 The structure of the `app/` directory determines the URL paths for the documentation.
 
