@@ -16,10 +16,12 @@
   "scripts": {
     "dev": "next dev -p 3002",
     "coverage": "node scripts/check-docs-coverage.mjs",
-    "prebuild": "npm run coverage",
+    "prebuild": "npm run icons && npm run coverage",
     "build": "node scripts/build.mjs",
     "start": "next start -p 3002",
-    "cluster": "cross-env NODE_ENV=production node server.js"
+    "cluster": "cross-env NODE_ENV=production node server.js",
+    "icons": "node scripts/generate-icons.mjs",
+    "predev": "npm run icons"
   },
   "devDependencies": {
     "@types/node": "25.6.1",

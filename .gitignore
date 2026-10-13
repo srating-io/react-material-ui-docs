@@ -6,6 +6,9 @@ node_modules
 .pnp.js
 .next
 
+# generated icon geometry - npm run icons
+/public/icons
+
 # testing
 /coverage
 analyze

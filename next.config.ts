@@ -19,6 +19,20 @@ export default async function config(): Promise<NextConfig> {
   // 3. Read and parse the file directly from the disk
   const depPkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 
+  // Same again for the icons package: its version names the directory that
+  // scripts/generate-icons.mjs writes the icon geometry to.
+  const iconsPkg = JSON.parse(
+    fs.readFileSync(
+      path.join(
+        mainEntryPath.substring(0, mainEntryPath.lastIndexOf('node_modules')),
+        'node_modules',
+        '@esmalley/react-material-icons',
+        'package.json'
+      ),
+      'utf8'
+    )
+  );
+
 
   // Optional build metadata. Not every build runs inside a git checkout.
   const gitInfo = (command: string): string => {
@@ -37,6 +51,7 @@ export default async function config(): Promise<NextConfig> {
       VERSION: `v${depPkg.version}`,
       COMMIT_HASH: commitHash,
       COMMIT_DATE: commitDate,
+      ICONS_VERSION: iconsPkg.version,
     },
     logging: {
       fetches: {
@@ -46,6 +61,15 @@ export default async function config(): Promise<NextConfig> {
     devIndicators: false,
     reactStrictMode: true,
   };
+
+  // The icon geometry under public/icons/ is written per icons-package version, so the
+  // file at a given url never changes: bumping the package writes a new directory.
+  config.headers = async () => [
+    {
+      source: '/icons/:version/:file',
+      headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+    },
+  ];
 
   // Turbopack does not follow the symlink that 'npm link @esmalley/react-material-ui' creates,
   // so the tracing root has to cover the parent directory. This is needed in production builds
