@@ -112,17 +112,28 @@ const AutocompleteMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const options: MenuOption[] = teams
-    .filter((team) => team.toLowerCase().includes(value.toLowerCase()))
-    .map((team) => ({
-      value: team,
-      label: team,
-      selectable: true,
-      onSelect: (opt: MenuOption) => {
-        setValue(String(opt.label));
-        setMenuOpen(false);
-      },
-    }));
+  const matches = value ? teams.filter((team) => team.toLowerCase().includes(value.toLowerCase())) : [];
+
+  const options: MenuOption[] = matches.map((team) => ({
+    value: team,
+    label: team,
+    selectable: true,
+    onSelect: (opt: MenuOption) => {
+      setValue(String(opt.label));
+      setMenuOpen(false);
+    },
+  }));
+
+  // Always leave the menu a row to show, so the input does the same thing whatever it holds.
+  if (!options.length) {
+    options.push({
+      value: null,
+      selectable: false,
+      disabled: true,
+      label: 'No results...',
+      style: { textAlign: 'center', opacity: 1 },
+    });
+  }
 
   return (
     <>
@@ -130,7 +141,16 @@ const AutocompleteMenu = () => {
         placeholder='Search teams'
         value={value}
         showError={false}
-        onFocus={(e) => setAnchorEl(e.currentTarget)}
+        onFocus={(e) => {
+          setAnchorEl(e.currentTarget);
+          setMenuOpen(true);
+        }}
+        // Focus alone will not fire if the field is already focused, so Escape then click
+        // needs the click handler to bring the menu back.
+        onClick={(e) => {
+          setAnchorEl(e.currentTarget);
+          setMenuOpen(true);
+        }}
         onChange={(val) => {
           const next = val as string;
           // TextInput re-fires onChange on blur with the value unchanged, and reopening on that
@@ -139,7 +159,7 @@ const AutocompleteMenu = () => {
             return;
           }
           setValue(next);
-          setMenuOpen(!!next);
+          setMenuOpen(true);
         }}
       />
       <Menu
@@ -348,17 +368,28 @@ export default function Page() {
             const [menuOpen, setMenuOpen] = useState(false);
             const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-            const options: MenuOption[] = teams
-              .filter((team) => team.toLowerCase().includes(value.toLowerCase()))
-              .map((team) => ({
-                value: team,
-                label: team,
-                selectable: true,
-                onSelect: (opt: MenuOption) => {
-                  setValue(String(opt.label));
-                  setMenuOpen(false);
-                },
-              }));
+            const matches = value ? teams.filter((team) => team.toLowerCase().includes(value.toLowerCase())) : [];
+
+            const options: MenuOption[] = matches.map((team) => ({
+              value: team,
+              label: team,
+              selectable: true,
+              onSelect: (opt: MenuOption) => {
+                setValue(String(opt.label));
+                setMenuOpen(false);
+              },
+            }));
+
+            // Always leave the menu a row to show, so the input does the same thing whatever it holds.
+            if (!options.length) {
+              options.push({
+                value: null,
+                selectable: false,
+                disabled: true,
+                label: 'No results...',
+                style: { textAlign: 'center', opacity: 1 },
+              });
+            }
 
             return (
               <>
@@ -366,7 +397,16 @@ export default function Page() {
                   placeholder='Search teams'
                   value={value}
                   showError={false}
-                  onFocus={(e) => setAnchorEl(e.currentTarget)}
+                  onFocus={(e) => {
+                    setAnchorEl(e.currentTarget);
+                    setMenuOpen(true);
+                  }}
+                  // Focus alone will not fire if the field is already focused, so Escape then click
+                  // needs the click handler to bring the menu back.
+                  onClick={(e) => {
+                    setAnchorEl(e.currentTarget);
+                    setMenuOpen(true);
+                  }}
                   onChange={(val) => {
                     const next = val as string;
                     // TextInput re-fires onChange on blur with the value unchanged, and reopening on that
@@ -375,7 +415,7 @@ export default function Page() {
                       return;
                     }
                     setValue(next);
-                    setMenuOpen(!!next);
+                    setMenuOpen(true);
                   }}
                 />
                 <Menu
