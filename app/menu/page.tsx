@@ -6,7 +6,7 @@ import InfoIcon from '@esmalley/react-material-icons/Info';
 import CheckCircleIcon from '@esmalley/react-material-icons/CheckCircle';
 import {
   Button, CodeBlock, Divider, getToaster, Menu, MenuDivider, MenuItem, MenuList, MenuListIcon,
-  MenuListText, MenuOption, Paper, Tile, Typography, useTheme,
+  MenuListText, MenuOption, Paper, TextInput, Tile, Typography, useTheme,
 } from '@esmalley/react-material-ui';
 import PropsTable from '../../components/PropsTable';
 
@@ -95,6 +95,55 @@ const TileMenu = () => {
           setAnchorEl(null);
         }}
         options={getOptions()}
+      />
+    </>
+  );
+};
+
+const teams = [
+  'Boston Celtics',
+  'Denver Nuggets',
+  'Golden State Warriors',
+  'Los Angeles Lakers',
+];
+
+const AutocompleteMenu = () => {
+  const [value, setValue] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  const options: MenuOption[] = teams
+    .filter((team) => team.toLowerCase().includes(value.toLowerCase()))
+    .map((team) => ({
+      value: team,
+      label: team,
+      selectable: true,
+      onSelect: (opt: MenuOption) => {
+        setValue(String(opt.label));
+        setMenuOpen(false);
+      },
+    }));
+
+  return (
+    <>
+      <TextInput
+        placeholder='Search teams'
+        value={value}
+        showError={false}
+        onFocus={(e) => setAnchorEl(e.currentTarget)}
+        onChange={(val) => {
+          setValue(val as string);
+          setMenuOpen(!!val);
+        }}
+      />
+      <Menu
+        open={menuOpen}
+        anchor={anchorEl}
+        elevateAnchor
+        useAnchorWidth
+        onClose={() => setMenuOpen(false)}
+        options={options}
+        style={{ marginTop: 10 }}
       />
     </>
   );
@@ -268,6 +317,71 @@ export default function Page() {
       </section>
 
       <section style={{ marginTop: 40 }}>
+        <Typography type='h6' style={{ marginBottom: 10 }}>Autocomplete</Typography>
+        <Typography type="body2" style={{ marginBottom: 20 }}>
+          A menu anchored to an input the user keeps typing into. <code>elevateAnchor</code>{' '}leaves
+          the anchor out of the dim and lets clicks reach it, so the field still reads and behaves
+          normally while the list is open.
+        </Typography>
+        <div style={{ width: '300px' }}>
+          <AutocompleteMenu />
+        </div>
+
+        <CodeBlock code={`
+          import { Menu, MenuOption, TextInput } from '@esmalley/react-material-ui';
+
+          const teams = [
+            'Boston Celtics',
+            'Denver Nuggets',
+            'Golden State Warriors',
+            'Los Angeles Lakers',
+          ];
+
+          const AutocompleteMenu = () => {
+            const [value, setValue] = useState('');
+            const [menuOpen, setMenuOpen] = useState(false);
+            const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+            const options: MenuOption[] = teams
+              .filter((team) => team.toLowerCase().includes(value.toLowerCase()))
+              .map((team) => ({
+                value: team,
+                label: team,
+                selectable: true,
+                onSelect: (opt: MenuOption) => {
+                  setValue(String(opt.label));
+                  setMenuOpen(false);
+                },
+              }));
+
+            return (
+              <>
+                <TextInput
+                  placeholder='Search teams'
+                  value={value}
+                  showError={false}
+                  onFocus={(e) => setAnchorEl(e.currentTarget)}
+                  onChange={(val) => {
+                    setValue(val as string);
+                    setMenuOpen(!!val);
+                  }}
+                />
+                <Menu
+                  open={menuOpen}
+                  anchor={anchorEl}
+                  elevateAnchor
+                  useAnchorWidth
+                  onClose={() => setMenuOpen(false)}
+                  options={options}
+                  style={{ marginTop: 10 }}
+                />
+              </>
+            );
+          };
+        `} />
+      </section>
+
+      <section style={{ marginTop: 40 }}>
         <Typography type='h6' style={{ marginBottom: 10 }}>Building a menu by hand</Typography>
         <Typography type='body2' style={{ marginBottom: 10 }}>
           <code>Menu</code>{' '}assembles its rows from the <code>options</code>{' '}array, but the pieces it
@@ -376,6 +490,7 @@ export default function Page() {
             { name: 'onClose', type: '() => void', required: true, description: 'Called on Escape, on a click outside, and on a backdrop click.' },
             { name: 'anchorOrigin', type: '{ vertical, horizontal }', default: "{ vertical: 'top', horizontal: 'left' }", description: 'vertical reads center, bottom or a number; horizontal reads center, right or a number. Anything else falls back to 36px vertical and 0 horizontal.' },
             { name: 'useAnchorWidth', type: 'boolean', default: 'false', description: 'Match the menu width to the anchor. This is how Select lines its dropdown up.' },
+            { name: 'elevateAnchor', type: 'boolean', default: 'false', description: 'Leave the anchor undimmed and let clicks reach it, so an input stays readable and usable while the menu is open. A click on the anchor no longer closes the menu.' },
             { name: 'showCloseButton', type: 'boolean', default: 'false', description: 'Adds a sticky close button in the top right.' },
             { name: 'style', type: 'React.CSSProperties', default: '{}', description: 'Merged into the menu surface.' },
           ]}
