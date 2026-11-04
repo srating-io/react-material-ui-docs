@@ -132,8 +132,14 @@ const AutocompleteMenu = () => {
         showError={false}
         onFocus={(e) => setAnchorEl(e.currentTarget)}
         onChange={(val) => {
-          setValue(val as string);
-          setMenuOpen(!!val);
+          const next = val as string;
+          // TextInput re-fires onChange on blur with the value unchanged, and reopening on that
+          // would undo the click outside that just closed the menu.
+          if (next === value) {
+            return;
+          }
+          setValue(next);
+          setMenuOpen(!!next);
         }}
       />
       <Menu
@@ -362,8 +368,14 @@ export default function Page() {
                   showError={false}
                   onFocus={(e) => setAnchorEl(e.currentTarget)}
                   onChange={(val) => {
-                    setValue(val as string);
-                    setMenuOpen(!!val);
+                    const next = val as string;
+                    // TextInput re-fires onChange on blur with the value unchanged, and reopening on that
+                    // would undo the click outside that just closed the menu.
+                    if (next === value) {
+                      return;
+                    }
+                    setValue(next);
+                    setMenuOpen(!!next);
                   }}
                 />
                 <Menu
