@@ -147,6 +147,23 @@ export default function Page() {
       `} />
       <Divider />
 
+      <Typography type='h6' style={{ marginBottom: 10 }}>One disabled option</Typography>
+        <ControlledInput label='Option 2 is taken' options={[
+          { label: 'Option 1', value: 1 },
+          { label: 'Option 2', value: 2, disabled: true },
+          { label: 'Option 3', value: 3 },
+        ]} />
+      <CodeBlock code={`
+        import { MultiPicker } from '@esmalley/react-material-ui';
+
+        <ControlledInput label='Option 2 is taken' options={[
+          { label: 'Option 1', value: 1 },
+          { label: 'Option 2', value: 2, disabled: true },
+          { label: 'Option 3', value: 3 },
+        ]} />
+      `} />
+      <Divider />
+
       <Typography type='h6' style={{ marginBottom: 10 }}>Required</Typography>
         <ControlledInput label='This question is required' required={true} />
       <CodeBlock code={`
@@ -172,14 +189,14 @@ export default function Page() {
         note='inputHandler is required here, unlike every other input. Enter and Space both activate an option.'
         rows={[
           { name: 'inputHandler', type: 'Inputs', description: 'Required. The form registry this picker reports to.' },
-          { name: 'options', type: 'MultiPickerOption[]', description: 'Required. The choices, each { label, value }.' },
+          { name: 'options', type: 'MultiPickerOption[]', description: 'Required. The choices, each { label, value, disabled? }. A disabled option greys out and leaves the tab order while the rest stay pickable; one already in selected keeps its colour and only dims.' },
           { name: 'selected', type: '(string | number)[]', description: 'Required. The selected values. Re-synced by a shallow compare, so it behaves as controlled.' },
           { name: 'onChange', type: '(value) => void', description: 'Receives an array in multi mode, or a single value (or null) in radio mode.' },
           { name: 'isRadio', type: 'boolean', default: 'false', description: 'Allow only one selection. Clicking the selected option again clears it.' },
           { name: 'numberOfColumns', type: 'number', default: '2', description: 'Grid width.' },
           { name: 'label', type: 'string', description: 'Caption above the grid.' },
-          { name: 'required', type: 'boolean', default: 'false', description: 'Adds the required check.' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'Blocks interaction on every option.' },
+          { name: 'required', type: 'boolean', default: 'false', description: 'Adds the required check. Skipped when every option is disabled, since there would be nothing left to satisfy it with.' },
+          { name: 'disabled', type: 'boolean', default: 'false', description: 'Blocks interaction on every option. To lock just one, set disabled on that option instead.' },
           { name: 'error', type: 'boolean', default: 'false', description: 'Force the error state.' },
           { name: 'errorMessage', type: 'string', default: '\'Selection is required\'', description: 'Message shown under the grid.' },
           { name: 'showError', type: 'boolean', default: 'true', description: 'Hide the message while keeping the reserved space.' },
